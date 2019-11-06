@@ -191,3 +191,5 @@ RUN pip install mpld3 && \
     pip install stemming && \
     pip install fbprophet && \
     pip install holoviews
+
+RUN pip install tensorflow==1.14.1
