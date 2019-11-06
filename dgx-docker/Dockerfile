@@ -4,7 +4,8 @@ ADD clean-layer.sh  /tmp/clean-layer.sh
 
 RUN pip install seaborn python-dateutil dask && \
     pip install pyyaml joblib pytagcloud husl geopy ml_metrics mne pyshp && \
-    pip install spacy && python -m spacy download en && python -m spacy download en_core_web_lg && \
+    pip install spacy && \
+    python -m spacy download en && python -m spacy download en_core_web_lg && \
     /tmp/clean-layer.sh
 
 RUN apt-get install -y libfreetype6-dev && \
