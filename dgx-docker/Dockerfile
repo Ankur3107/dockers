@@ -33,3 +33,49 @@ RUN pip install gensim && \
     # Stop-words
     pip install stop-words && \
     pip install --upgrade scikit-image
+
+# b/128333086: Set PROJ_LIB to points to the proj4 cartographic library.
+ENV PROJ_LIB=/opt/conda/share/proj
+
+
+# scikit-learn dependencies
+RUN pip install scipy && \
+    pip install scikit-learn && \
+    # HDF5 support
+    pip install h5py && \
+    pip install biopython && \
+    # PUDB, for local debugging convenience
+    pip install pudb && \
+    pip install imbalanced-learn && \
+    # Convex Optimization library
+    # Latest version fails to install, see https://github.com/cvxopt/cvxopt/issues/77
+    #    and https://github.com/cvxopt/cvxopt/issues/80
+    # pip install cvxopt && \
+    # Profiling and other utilities
+    pip install line_profiler && \
+    pip install orderedmultidict && \
+    pip install smhasher && \
+    pip install bokeh && \
+    pip install numba && \
+    pip install datashader && \
+    # Boruta (python implementation)
+    pip install Boruta && \
+    cd /usr/local/src && git clone git://github.com/nicolashennetier/pyeconometrics.git && \
+    cd pyeconometrics && python setup.py install && \
+    apt-get install -y graphviz && pip install graphviz && \
+    # Pandoc is a dependency of deap
+    apt-get install -y pandoc && \
+    pip install git+git://github.com/scikit-learn-contrib/py-earth.git@issue191 && \
+    pip install essentia && \
+    # PyTorch
+    export CXXFLAGS="-std=c++11" && \
+    export CFLAGS="-std=c99" && \
+    conda install -y pytorch-cpu torchvision-cpu -c pytorch && \
+    # PyTorch Audio
+    apt-get install -y sox libsox-dev libsox-fmt-all && \
+    pip install cffi && \
+    # TODO(b/143372552): Unpin when pytorch/audio is compatible with the version
+    # of pytorch-cpu installed through conda above. A better solution would be to
+    # install torchaudio-cpu in the conda install above when there is a
+    # torchaudio-cpu version that doesn't conflict with pytorch-cpu
+    pip install git+git://github.com/pytorch/audio.git@ce1f8aafe63f7d579c74ce54d2a85d452d55c881
