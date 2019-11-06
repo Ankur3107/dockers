@@ -59,6 +59,68 @@ RUN pip install scipy && \
     pip install numba && \
     pip install datashader
 
+RUN pip install kmeans-smote --no-dependencies && \
+    # Add google PAIR-code Facets
+    cd /opt/ && git clone https://github.com/PAIR-code/facets && cd facets/ && jupyter nbextension install facets-dist/ --user && \
+    export PYTHONPATH=$PYTHONPATH:/opt/facets/facets_overview/python/ && \
+    pip install tensorpack && \
+    pip install pycountry && pip install iso3166 && \
+    pip install pydash && \
+    pip install kmodes --no-dependencies && \
+    pip install librosa && \
+    pip install polyglot && \
+    pip install mmh3 && \
+    pip install fbpca && \
+    pip install sentencepiece && \
+    pip install cufflinks && \
+    pip install glmnet_py && \
+    pip install lime && \
+    pip install memory_profiler
+
+
+# install cython & cysignals before pyfasttext
+RUN pip install --upgrade cython && \
+    pip install --upgrade cysignals && \
+    pip install pyfasttext && \
+    # ktext has an explicit dependency on Keras 2.2.4 which is not
+    # compatible with TensorFlow 2.0 (support was added in Keras 2.3.0).
+    # Add the package back once it is fixed upstream.
+    # pip install ktext && \
+    pip install fasttext && \
+    apt-get install -y libhunspell-dev && pip install hunspell && \
+    # b/138723119: annoy's latest version 1.16 was failing
+    pip install annoy==1.15.2 && \
+    # Need to use CountEncoder from category_encoders before it's officially released
+    pip install git+https://github.com/scikit-learn-contrib/categorical-encoding.git && \
+    # TODO(b/143373325) Revert to 0.6.0 to avoid regression in 0.7.0. Go back to
+    # latest when 0.8.0 is released.
+    pip install google-cloud-automl==0.6.0 && \
+    # Newer version crashes (latest = 1.14.0) when running tensorflow.
+    # python -c "from google.cloud import bigquery; import tensorflow". This flow is common because bigquery is imported in kaggle_gcp.py
+    # which is loaded at startup.
+    pip install google-cloud-bigquery==1.12.1 && \
+    pip install google-cloud-storage && \
+    pip install ortools && \
+    pip install scattertext && \
+    # Pandas data reader
+    pip install pandas-datareader && \
+    pip install pykoko && \
+    pip install wordsegment && \
+    pip install pyahocorasick && \
+    pip install wordbatch && \
+    pip install emoji && \
+    # Add Japanese morphological analysis engine
+    pip install janome && \
+    pip install wfdb && \
+    pip install vecstack && \
+    pip install sklearn-contrib-lightning && \
+    # yellowbrick machine learning visualization library
+    pip install yellowbrick && \
+    pip install mlcrate && \
+    # Required to display Altair charts in Jupyter notebook
+    pip install vega3 && \
+    jupyter nbextension install --sys-prefix --py vega3
+
 RUN pip install mpld3 && \
     pip install mplleaflet && \
     pip install gpxpy && \
@@ -128,69 +190,7 @@ RUN pip install mpld3 && \
     pip install sklearn-pandas && \
     pip install stemming && \
     pip install fbprophet && \
-    pip install holoviews && \
-    # 1.6.2 is not currently supported by the version of matplotlib we are using.
-    # See other comments about why matplotlib is pinned.
-    pip install geoviews==1.6.1
+    pip install holoviews
 
-RUN pip install kmeans-smote --no-dependencies && \
-    # Add google PAIR-code Facets
-    cd /opt/ && git clone https://github.com/PAIR-code/facets && cd facets/ && jupyter nbextension install facets-dist/ --user && \
-    export PYTHONPATH=$PYTHONPATH:/opt/facets/facets_overview/python/ && \
-    pip install tensorpack && \
-    pip install pycountry && pip install iso3166 && \
-    pip install pydash && \
-    pip install kmodes --no-dependencies && \
-    pip install librosa && \
-    pip install polyglot && \
-    pip install mmh3 && \
-    pip install fbpca && \
-    pip install sentencepiece && \
-    pip install cufflinks && \
-    pip install glmnet_py && \
-    pip install lime && \
-    pip install memory_profiler
 
-# install cython & cysignals before pyfasttext
-RUN pip install --upgrade cython && \
-    pip install --upgrade cysignals && \
-    pip install pyfasttext && \
-    # ktext has an explicit dependency on Keras 2.2.4 which is not
-    # compatible with TensorFlow 2.0 (support was added in Keras 2.3.0).
-    # Add the package back once it is fixed upstream.
-    # pip install ktext && \
-    pip install fasttext && \
-    apt-get install -y libhunspell-dev && pip install hunspell && \
-    # b/138723119: annoy's latest version 1.16 was failing
-    pip install annoy==1.15.2 && \
-    # Need to use CountEncoder from category_encoders before it's officially released
-    pip install git+https://github.com/scikit-learn-contrib/categorical-encoding.git && \
-    # TODO(b/143373325) Revert to 0.6.0 to avoid regression in 0.7.0. Go back to
-    # latest when 0.8.0 is released.
-    pip install google-cloud-automl==0.6.0 && \
-    # Newer version crashes (latest = 1.14.0) when running tensorflow.
-    # python -c "from google.cloud import bigquery; import tensorflow". This flow is common because bigquery is imported in kaggle_gcp.py
-    # which is loaded at startup.
-    pip install google-cloud-bigquery==1.12.1 && \
-    pip install google-cloud-storage && \
-    pip install ortools && \
-    pip install scattertext && \
-    # Pandas data reader
-    pip install pandas-datareader && \
-    pip install pykoko && \
-    pip install wordsegment && \
-    pip install pyahocorasick && \
-    pip install wordbatch && \
-    pip install emoji && \
-    # Add Japanese morphological analysis engine
-    pip install janome && \
-    pip install wfdb && \
-    pip install vecstack && \
-    pip install sklearn-contrib-lightning && \
-    # yellowbrick machine learning visualization library
-    pip install yellowbrick && \
-    pip install mlcrate && \
-    # Required to display Altair charts in Jupyter notebook
-    pip install vega3 && \
-    jupyter nbextension install --sys-prefix --py vega3
 
