@@ -454,4 +454,3 @@ RUN apt-get install tesseract-ocr -y && \
     pip install pyocr
 
 ENV TESSERACT_PATH=/usr/bin/tesseract
-
