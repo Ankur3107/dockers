@@ -1,5 +1,7 @@
 # dockers
 
+### TF docker
+
 
 ### DGX-Docker: On working
 
@@ -9,3 +11,10 @@
 #### TODO:
     1. run dockerfile and make images 
     2. try to run on nvidia-docker
+
+
+# Reference:
+
+https://github.com/Kaggle/docker-python/blob/master/Dockerfile
+https://github.com/Kaggle/docker-python/blob/master/clean-layer.sh
+https://github.com/Kaggle/docker-python
