@@ -8,39 +8,7 @@ RUN pip install seaborn python-dateutil dask && \
     python -m spacy download en && python -m spacy download en_core_web_lg
 
 RUN pip install gensim && \
-    pip install textblob && \
     pip install wordcloud && \
-    pip install xgboost && \
-    pip install lightgbm && \
-    pip install git+git://github.com/Lasagne/Lasagne.git && \
-    pip install keras && \
-    pip install keras-rl && \
-    #keras-rcnn
-    pip install git+https://github.com/broadinstitute/keras-rcnn && \
-    # version 3.7.1 adds a dependency on entrypoints > 3. This causes a reinstall but fails because
-    # it is a distutils package and can't be uninstalled. Once the anaconda image in updated, this
-    # pin should be removed.
-    pip install flake8==3.6.0 && \
-    #neon
-    cd /usr/local/src && \
-    git clone --depth 1 https://github.com/NervanaSystems/neon.git && \
-    cd neon && pip install . && \
-    #nolearn
-    cd /usr/local/src && mkdir nolearn && cd nolearn && \
-    git clone --depth 1 https://github.com/dnouri/nolearn.git && cd nolearn && \
-    echo "x" > README.rst && echo "x" > CHANGES.rst && \
-    python setup.py install && \
-    # Dev branch of Theano
-    pip install git+git://github.com/Theano/Theano.git --upgrade --no-deps && \
-    # put theano compiledir inside /tmp (it needs to be in writable dir)
-    printf "[global]\nbase_compiledir = /tmp/.theano\n" > /.theanorc && \
-    cd /usr/local/src &&  git clone --depth 1 https://github.com/pybrain/pybrain && \
-    cd pybrain && python setup.py install && \
-    # Base ATLAS
-    apt-get install -y libatlas-base-dev && \
-    cd /usr/local/src && git clone --depth 1 https://github.com/ztane/python-Levenshtein && \
-    cd python-Levenshtein && python setup.py install && \
-    pip install hep_ml && \
     # chainer
     pip install chainer && \
     # NLTK Project datasets
