@@ -131,34 +131,7 @@ RUN pip install mpld3 && \
     pip install holoviews && \
     # 1.6.2 is not currently supported by the version of matplotlib we are using.
     # See other comments about why matplotlib is pinned.
-    pip install geoviews==1.6.1 && \
-    pip install hypertools && \
-    pip install py_stringsimjoin && \
-    pip install speedml && \
-    pip install nibabel && \
-    pip install mlens && \
-    pip install scikit-multilearn && \
-    pip install cleverhans && \
-    pip install leven && \
-    pip install catboost && \
-    #cd /usr/local/src && git clone --depth=1 https://github.com/AxeldeRomblay/MLBox && cd MLBox/python-package && python setup.py install && \
-    pip install fastFM && \
-    pip install lightfm && \
-    pip install paramnb && \
-    pip install folium && \
-    pip install scikit-plot && \
-    # dipy requires the optional fury dependency for visualizations.
-    pip install fury dipy && \
-    # plotnine 0.5 is depending on matplotlib >= 3.0 which is not compatible with basemap.
-    # once basemap support matplotlib, we can unpin this package.
-    pip install plotnine==0.4.0 && \
-    pip install git+https://github.com/dvaida/hallucinate.git && \
-    pip install scikit-surprise && \
-    pip install pymongo && \
-    pip install edward && \
-    pip install geoplot && \
-    pip install eli5 && \
-    pip install implicit
+    pip install geoviews==1.6.1
 
 RUN pip install kmeans-smote --no-dependencies && \
     # Add google PAIR-code Facets
