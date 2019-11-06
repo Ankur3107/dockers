@@ -192,4 +192,4 @@ RUN pip install mpld3 && \
     pip install fbprophet && \
     pip install holoviews
 
-RUN pip install tensorflow==1.14.1
+RUN pip install tensorflow==1.14.0
