@@ -10,7 +10,6 @@ RUN pip install seaborn python-dateutil dask && \
 RUN pip install gensim && \
     pip install textblob && \
     pip install wordcloud && \
-    conda install -y -c conda-forge python-igraph && \
     pip install xgboost && \
     pip install lightgbm && \
     pip install git+git://github.com/Lasagne/Lasagne.git && \
