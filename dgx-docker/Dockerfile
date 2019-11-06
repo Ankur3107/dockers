@@ -87,7 +87,6 @@ RUN pip install --upgrade cython && \
     # Add the package back once it is fixed upstream.
     # pip install ktext && \
     pip install fasttext && \
-    apt-get install -y libhunspell-dev && pip install hunspell && \
     # b/138723119: annoy's latest version 1.16 was failing
     pip install annoy==1.15.2 && \
     # Need to use CountEncoder from category_encoders before it's officially released
@@ -118,8 +117,9 @@ RUN pip install --upgrade cython && \
     pip install yellowbrick && \
     pip install mlcrate && \
     # Required to display Altair charts in Jupyter notebook
-    pip install vega3 && \
-    jupyter nbextension install --sys-prefix --py vega3
+    pip install vega3
+
+RUN jupyter nbextension install --sys-prefix --py vega3
 
 RUN pip install mpld3 && \
     pip install mplleaflet && \
@@ -191,6 +191,3 @@ RUN pip install mpld3 && \
     pip install stemming && \
     pip install fbprophet && \
     pip install holoviews
-
-
-
