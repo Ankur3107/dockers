@@ -73,8 +73,6 @@ RUN pip install mpld3 && \
     pip install Baker && \
     pip install path.py && \
     pip install Geohash && \
-    # https://github.com/vinsci/geohash/issues/4
-    sed -i -- 's/geohash/.geohash/g' /opt/conda/lib/python3.6/site-packages/Geohash/__init__.py && \
     pip install deap && \
     pip install tpot && \
     pip install scikit-optimize && \
@@ -160,8 +158,7 @@ RUN pip install mpld3 && \
     pip install edward && \
     pip install geoplot && \
     pip install eli5 && \
-    pip install implicit && \
-    pip install dask-ml[xgboost]
+    pip install implicit
 
 RUN pip install kmeans-smote --no-dependencies && \
     # Add google PAIR-code Facets
