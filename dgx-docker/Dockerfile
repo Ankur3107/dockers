@@ -4,7 +4,7 @@ ADD clean-layer.sh  /tmp/clean-layer.sh
 
 RUN pip install seaborn python-dateutil dask && \
     pip install pyyaml joblib pytagcloud husl geopy ml_metrics mne pyshp && \
-    pip install spacy && \
+    pip install -U spacy[cuda100] && \
     python -m spacy download en && python -m spacy download en_core_web_lg
 
 RUN apt-get install -y libfreetype6-dev && \
@@ -452,5 +452,5 @@ RUN apt-get install tesseract-ocr -y && \
     pip install pdf2image && \
     pip install PyPDF && \
     pip install pyocr
-    
+
 ENV TESSERACT_PATH=/usr/bin/tesseract
