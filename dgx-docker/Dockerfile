@@ -5,8 +5,7 @@ ADD clean-layer.sh  /tmp/clean-layer.sh
 RUN pip install seaborn python-dateutil dask && \
     pip install pyyaml joblib pytagcloud husl geopy ml_metrics mne pyshp && \
     pip install spacy && \
-    python -m spacy download en && python -m spacy download en_core_web_lg && \
-    /tmp/clean-layer.sh
+    python -m spacy download en && python -m spacy download en_core_web_lg
 
 RUN apt-get install -y libfreetype6-dev && \
     apt-get install -y libglib2.0-0 libxext6 libsm6 libxrender1 libfontconfig1 --fix-missing && \
@@ -68,8 +67,7 @@ RUN apt-get install -y libfreetype6-dev && \
     vader_lexicon verbnet webtext word2vec_sample wordnet wordnet_ic words ycoe && \
     # Stop-words
     pip install stop-words && \
-    pip install --upgrade scikit-image && \
-    /tmp/clean-layer.sh
+    pip install --upgrade scikit-image
 
 
 # Make sure the dynamic linker finds the right libstdc++
@@ -103,8 +101,7 @@ RUN apt-get -y install zlib1g-dev liblcms2-dev libwebp-dev libgeos-dev && \
     wget --no-verbose http://h2o-release.s3.amazonaws.com/h2o/latest_stable -O latest && \
     wget --no-verbose --no-check-certificate -i latest -O h2o.zip && rm latest && \
     unzip h2o.zip && rm h2o.zip && cp h2o-*/h2o.jar . && \
-    pip install `find . -name "*whl"` && \
-    /tmp/clean-layer.sh
+    pip install `find . -name "*whl"`
 
 # b/128333086: Set PROJ_LIB to points to the proj4 cartographic library.
 ENV PROJ_LIB=/opt/conda/share/proj
@@ -150,16 +147,14 @@ RUN pip install scipy && \
     # of pytorch-cpu installed through conda above. A better solution would be to
     # install torchaudio-cpu in the conda install above when there is a
     # torchaudio-cpu version that doesn't conflict with pytorch-cpu
-    pip install git+git://github.com/pytorch/audio.git@ce1f8aafe63f7d579c74ce54d2a85d452d55c881 && \
-    /tmp/clean-layer.sh
+    pip install git+git://github.com/pytorch/audio.git@ce1f8aafe63f7d579c74ce54d2a85d452d55c881
 
 # vtk with dependencies
 RUN apt-get install -y libgl1-mesa-glx && \
     pip install vtk && \
     # xvfbwrapper with dependencies
     apt-get install -y xvfb && \
-    pip install xvfbwrapper && \
-    /tmp/clean-layer.sh
+    pip install xvfbwrapper
 
 RUN pip install mpld3 && \
     pip install mplleaflet && \
@@ -263,8 +258,7 @@ RUN pip install mpld3 && \
     pip install geoplot && \
     pip install eli5 && \
     pip install implicit && \
-    pip install dask-ml[xgboost] && \
-    /tmp/clean-layer.sh
+    pip install dask-ml[xgboost]
 
 RUN pip install kmeans-smote --no-dependencies && \
     # Add google PAIR-code Facets
@@ -282,8 +276,7 @@ RUN pip install kmeans-smote --no-dependencies && \
     pip install cufflinks && \
     pip install glmnet_py && \
     pip install lime && \
-    pip install memory_profiler && \
-    /tmp/clean-layer.sh
+    pip install memory_profiler
 
 # install cython & cysignals before pyfasttext
 RUN pip install --upgrade cython && \
@@ -326,8 +319,7 @@ RUN pip install --upgrade cython && \
     pip install mlcrate && \
     # Required to display Altair charts in Jupyter notebook
     pip install vega3 && \
-    jupyter nbextension install --sys-prefix --py vega3 && \
-    /tmp/clean-layer.sh
+    jupyter nbextension install --sys-prefix --py vega3
 
 # Fast.ai and dependencies
 RUN pip install bcolz && \
@@ -388,8 +380,7 @@ RUN pip install bcolz && \
     pip install pyarrow==0.10.0 && \
     pip install feather-format && \
     pip install fastai && \
-    pip install torchtext && \
-    /tmp/clean-layer.sh
+    pip install torchtext
 
 # allennlp and dependencies
 # TODO: install deps when underlying dependency is fixed. https://github.com/Kaggle/docker-python/issues/548
@@ -399,8 +390,7 @@ RUN pip install jsonnet overrides tensorboardX && \
     pip install pytorch-pretrained-bert>=0.6.0 pytorch-transformers==1.1.0 jsonpickle && \
     pip install requests>=2.18 editdistance conllu==0.11 && \
     pip install conllu==1.3.1 ftfy && \
-    pip install --no-dependencies allennlp && \
-    /tmp/clean-layer.sh
+    pip install --no-dependencies allennlp
 
 
     ###########
@@ -453,8 +443,7 @@ RUN pip install flashtext && \
     apt-get -y install libspatialindex-dev && \
     pip install pytorch-ignite && \
     pip install qgrid && \
-    pip install bqplot && \
-    /tmp/clean-layer.sh
+    pip install bqplot
 
 # Tesseract and some associated utility packages
 RUN apt-get install tesseract-ocr -y && \
@@ -462,6 +451,6 @@ RUN apt-get install tesseract-ocr -y && \
     pip install wand==0.5.3 && \
     pip install pdf2image && \
     pip install PyPDF && \
-    pip install pyocr && \
-    /tmp/clean-layer.sh
+    pip install pyocr
+    
 ENV TESSERACT_PATH=/usr/bin/tesseract
