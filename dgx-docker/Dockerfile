@@ -58,3 +58,9 @@ RUN pip install scipy && \
     pip install bokeh && \
     pip install numba && \
     pip install datashader
+
+# New Packages
+
+COPY new_packages .
+
+RUN pip install -r new_packages/requirements.txt
