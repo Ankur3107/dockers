@@ -61,6 +61,6 @@ RUN pip install scipy && \
 
 # New Packages
 
-COPY new_packages .
+COPY new_packages/requirements.txt requirements.txt
 
 RUN pip install -r new_packages/requirements.txt
