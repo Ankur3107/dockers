@@ -18,3 +18,7 @@
 https://github.com/Kaggle/docker-python/blob/master/Dockerfile
 https://github.com/Kaggle/docker-python/blob/master/clean-layer.sh
 https://github.com/Kaggle/docker-python
+
+https://github.com/NVIDIA/nvidia-docker
+https://www.tensorflow.org/install/docker#gpu_support
+https://hub.docker.com/r/tensorflow/tensorflow/
