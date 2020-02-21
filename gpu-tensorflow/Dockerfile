@@ -1,6 +1,6 @@
 FROM nvidia/cuda:9.0-base-ubuntu16.04
 
-LABEL maintainer="Amazon AI"
+LABEL maintainer="Ankur Kumar"
 
 ARG framework_installable
 ARG framework_support_installable=sagemaker_tensorflow_container-2.0.0.tar.gz
