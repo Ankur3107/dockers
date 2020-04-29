@@ -1,5 +1,5 @@
-FROM tensorflow/tensorflow:latest-gpu-py3
-
+FROM tensorflow/tensorflow:latest-gpu-py3-jupyter
+ 
 ADD clean-layer.sh  /tmp/clean-layer.sh
 
 RUN pip install seaborn python-dateutil dask && \
