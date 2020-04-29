@@ -1,0 +1,10 @@
+sentencepiece
+transformers
+tensorflow_addons
+six==1.12.0
+scikit-learn
+pandas
+xlrd
+tqdm
+openpyxl
+fuzzywuzzy
