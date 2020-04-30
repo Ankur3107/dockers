@@ -39,4 +39,4 @@ RUN pip install scipy && \
 
 COPY new_packages/requirements.txt requirements.txt
 
-RUN pip install -r new_packages/requirements.txt
+RUN pip install -r requirements.txt
