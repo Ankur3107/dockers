@@ -4,7 +4,7 @@ FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04 AS nvidia
 FROM gcr.io/kaggle-images/python-tensorflow-whl:2.2.0-py37-2 as tensorflow_whl
 FROM gcr.io/kaggle-images/python:${BASE_TAG}
 
-#ADD clean-layer.sh  /tmp/clean-layer.sh
+ADD clean-layer.sh  /tmp/clean-layer.sh
 
 # Cuda support
 COPY --from=nvidia /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/
@@ -47,19 +47,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       libnccl2=2.5.6-1+cuda$CUDA_MAJOR_VERSION.$CUDA_MINOR_VERSION \
       libnccl-dev=2.5.6-1+cuda$CUDA_MAJOR_VERSION.$CUDA_MINOR_VERSION && \
     ln -s /usr/local/cuda-$CUDA_MAJOR_VERSION.$CUDA_MINOR_VERSION /usr/local/cuda && \
-    ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
+    ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+    /tmp/clean-layer.sh
 
 # Install OpenCL & libboost (required by LightGBM GPU version)
 RUN apt-get install -y ocl-icd-libopencl1 clinfo libboost-all-dev && \
     mkdir -p /etc/OpenCL/vendors && \
-    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
+    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd && \
+    /tmp/clean-layer.sh
 
 # When using pip in a conda environment, conda commands should be ran first and then
 # the remaining pip commands: https://www.anaconda.com/using-pip-in-a-conda-environment/
 # However, because this image is based on the CPU image, this isn't possible but better
 # to put them at the top of this file to minize conflicts.
 RUN conda remove --force -y pytorch torchvision torchaudio cpuonly && \
-    conda install "pytorch>=1.5.0" "torchvision>=0.6.0" "torchaudio>=0.5.0" cudatoolkit=$CUDA_VERSION
+    conda install "pytorch>=1.5.0" "torchvision>=0.6.0" "torchaudio>=0.5.0" cudatoolkit=$CUDA_VERSION && \
+    /tmp/clean-layer.sh
 
 # Install LightGBM with GPU
 RUN pip uninstall -y lightgbm && \
@@ -73,7 +76,8 @@ RUN pip uninstall -y lightgbm && \
     cd /usr/local/src/LightGBM/python-package && \
     python setup.py install --precompile && \
     mkdir -p /etc/OpenCL/vendors && \
-    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd
+    echo "libnvidia-opencl.so.1" > /etc/OpenCL/vendors/nvidia.icd && \
+    /tmp/clean-layer.sh
 
 # Install JAX
 # b/154150582#comment9: JAX 0.1.63 with jaxlib 0.1.43 is causing the GPU tests to hang.
@@ -85,7 +89,8 @@ ENV JAX_PLATFORM=linux_x86_64
 ENV JAX_BASE_URL="https://storage.googleapis.com/jax-releases"
 
 RUN  pip install $JAX_BASE_URL/$JAX_CUDA_VERSION/jaxlib-$JAXLIB_VERSION-$JAX_PYTHON_VERSION-none-$JAX_PLATFORM.whl && \
-     pip install jax==$JAX_VERSION
+     pip install jax==$JAX_VERSION && \
+    /tmp/clean-layer.sh
 
 # Reinstall packages with a separate version for GPU support.
 COPY --from=tensorflow_whl /tmp/tensorflow_gpu/*.whl /tmp/tensorflow_gpu/
@@ -94,18 +99,21 @@ RUN pip uninstall -y tensorflow && \
     rm -rf /tmp/tensorflow_gpu && \
     pip uninstall -y mxnet && \
     # b/126259508 --no-deps prevents numpy from being downgraded.
-    pip install --no-deps mxnet-cu$CUDA_MAJOR_VERSION$CUDA_MINOR_VERSION
+    pip install --no-deps mxnet-cu$CUDA_MAJOR_VERSION$CUDA_MINOR_VERSION && \
+    /tmp/clean-layer.sh
 
  # Reinstall TensorFlow addons (TFA) with GPU support.
 COPY --from=tensorflow_whl /tmp/tfa_gpu/*.whl /tmp/tfa_gpu/
 RUN pip install /tmp/tfa_gpu/tensorflow*.whl && \
-    rm -rf /tmp/tfa_gpu/
+    rm -rf /tmp/tfa_gpu/ && \
+    /tmp/clean-layer.sh
 
 # Install GPU-only packages
 RUN pip install pycuda && \
     pip install cupy-cuda$CUDA_MAJOR_VERSION$CUDA_MINOR_VERSION && \
     pip install pynvrtc && \
-    pip install nnabla-ext-cuda$CUDA_MAJOR_VERSION$CUDA_MINOR_VERSION
+    pip install nnabla-ext-cuda$CUDA_MAJOR_VERSION$CUDA_MINOR_VERSION && \
+    /tmp/clean-layer.sh
 
 # Re-add TensorBoard Jupyter extension patch
 # b/139212522 re-enable TensorBoard once solution for slowdown is implemented.
