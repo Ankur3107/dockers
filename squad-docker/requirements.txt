@@ -3,8 +3,14 @@ transformers
 tensorflow_addons
 six==1.12.0
 scikit-learn
+spacy
 pandas
 xlrd
 tqdm
 openpyxl
 fuzzywuzzy
+tensorflow-hub
+nlp_preprocessing
+model-x
+hyperas
+lda2vec

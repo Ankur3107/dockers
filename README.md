@@ -1,24 +1,25 @@
 # dockers
 
-### TF docker
+
+## 1.   Docker Image: ankur310794/tensorflow
+
+    Tensorflow  =>  tensorflow:2.0.0-gpu-py3
+    Other Essential Packages =>  pandas, scikit-learn, transformers ... etc
 
 
-### DGX-Docker: On working
+## 2.   Docker Image: ankur310794/nlp_tf
 
-#### Done:
-    1. added package from kaggle docker
+    Tensorflow  => tensorflow:latest-gpu-py3-jupyter
+    NLP Packages    =>  spacy, gensim, wordcloud, sentencepiece, textacy ... etc
 
-#### TODO:
-    1. run dockerfile and make images 
-    2. try to run on nvidia-docker
 
 
 # Reference:
 
-https://github.com/Kaggle/docker-python/blob/master/Dockerfile
-https://github.com/Kaggle/docker-python/blob/master/clean-layer.sh
-https://github.com/Kaggle/docker-python
+1.  https://github.com/Kaggle/docker-python/blob/master/Dockerfile
+2.  https://github.com/Kaggle/docker-python/blob/master/clean-layer.sh
+3.  https://github.com/Kaggle/docker-python
 
-https://github.com/NVIDIA/nvidia-docker
-https://www.tensorflow.org/install/docker#gpu_support
-https://hub.docker.com/r/tensorflow/tensorflow/
+4.  https://github.com/NVIDIA/nvidia-docker
+5.  https://www.tensorflow.org/install/docker#gpu_support
+6.  https://hub.docker.com/r/tensorflow/tensorflow/
