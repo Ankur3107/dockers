@@ -23,3 +23,4 @@
 4.  https://github.com/NVIDIA/nvidia-docker
 5.  https://www.tensorflow.org/install/docker#gpu_support
 6.  https://hub.docker.com/r/tensorflow/tensorflow/
+7.  https://hub.docker.com/v2/repositories/ankur310794/tensorflow/
