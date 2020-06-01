@@ -109,8 +109,11 @@ ENV PATH=/home/user/miniconda/bin:$PATH
 RUN curl -sLo ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.7.12.1-Linux-x86_64.sh \
  && chmod +x ~/miniconda.sh \
  && ~/miniconda.sh -b -p ~/miniconda \
- && rm ~/miniconda.sh \
- && conda install -y python==3.6.9 \
+ && rm ~/miniconda.sh
+ 
+RUN source ~/miniconda/bin/activate
+
+RUN conda install -y python==3.6.9 \
  && conda clean -ya
 
  # CUDA 10.1-specific steps
