@@ -110,8 +110,11 @@ RUN curl -sLo ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.7.
  && chmod +x ~/miniconda.sh \
  && ~/miniconda.sh -b -p ~/miniconda \
  && rm ~/miniconda.sh
- 
-RUN source ~/miniconda/bin/activate
+
+
+RUN echo "source ~/miniconda/bin/activate" > ~/.bashrc
+
+SHELL ["/bin/bash", "-c"]
 
 RUN conda install -y python==3.6.9 \
  && conda clean -ya
