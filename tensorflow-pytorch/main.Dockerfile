@@ -112,9 +112,14 @@ RUN curl -sLo ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.7.
  && rm ~/miniconda.sh
 
 
-RUN echo "source ~/miniconda/bin/activate" > ~/.bashrc
+RUN /bin/bash -c "source ~/miniconda/bin/activate \
+    && conda config --add channels conda-forge \
+    && conda install Jupiter \
+    && conda env list"
 
-SHELL ["/bin/bash", "-c"]
+#RUN echo "source ~/miniconda/bin/activate" > ~/.bashrc
+
+#SHELL ["/bin/bash", "-c"]
 
 RUN conda install -y python==3.6.9 \
  && conda clean -ya
