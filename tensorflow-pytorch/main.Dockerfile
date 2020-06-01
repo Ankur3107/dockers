@@ -100,8 +100,20 @@ RUN wget https://raw.githubusercontent.com/tensorflow/docs/master/site/en/tutori
 RUN wget https://raw.githubusercontent.com/tensorflow/docs/master/site/en/tutorials/keras/text_classification_with_hub.ipynb
 #COPY readme-for-jupyter.md README.md
 RUN apt-get autoremove -y && apt-get remove -y wget
-WORKDIR /tf
-EXPOSE 8888
+
+# Create a working directory
+RUN mkdir /app
+WORKDIR /app
+
+# Create a non-root user and switch to it
+RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
+ && chown -R user:user /app
+RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
+USER user
+
+# All users can use /home/user as their home directory
+ENV HOME=/home/user
+RUN chmod 777 /home/user
 
 # Install Miniconda and Python 3.6
 ENV CONDA_AUTO_UPDATE_CONDA=false
@@ -109,30 +121,16 @@ ENV PATH=/home/user/miniconda/bin:$PATH
 RUN curl -sLo ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.7.12.1-Linux-x86_64.sh \
  && chmod +x ~/miniconda.sh \
  && ~/miniconda.sh -b -p ~/miniconda \
- && rm ~/miniconda.sh
-
-
-RUN /bin/bash -c "source ~/miniconda/bin/activate \
-    && conda config --add channels conda-forge \
-    && conda install Jupiter \
-    && conda env list"
-
-#RUN echo "source ~/miniconda/bin/activate" > ~/.bashrc
-
-#SHELL ["/bin/bash", "-c"]
-
-RUN conda install -y python==3.6.9 \
+ && rm ~/miniconda.sh \
+ && conda install -y python==3.6.9 \
  && conda clean -ya
 
- # CUDA 10.1-specific steps
+# CUDA 10.1-specific steps
 RUN conda install -y -c pytorch \
     cudatoolkit=10.1 \
     "pytorch=1.4.0=py3.6_cuda10.1.243_cudnn7.6.3_0" \
     "torchvision=0.5.0=py36_cu101" \
  && conda clean -ya
 
+# Set the default command to python3
 CMD ["python3"]
-
-#RUN python3 -m ipykernel.kernelspec
-
-#CMD ["bash", "-c", "source /etc/bash.bashrc && jupyter notebook --notebook-dir=/tf --ip 0.0.0.0 --no-browser --allow-root"]
